@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using StackExchange.Redis;
+﻿using StackExchange.Redis;
 using System.Collections.Generic;
 
-namespace Valuator.Data.Repositories
+namespace ClassLibrary
 {
     public class RedisRepository : IRedisRepository
     {
@@ -17,13 +16,13 @@ namespace Valuator.Data.Repositories
 
         public IEnumerable<string> GetKeysFromDbByPrefix(string prefix)
         {
-             var server = _redis.GetServer(Localhost, Port);
-             List<string> keys = new List<string>();
-             foreach (var key in server.Keys(pattern: prefix + "*"))
-             {
-                 keys.Add(key);
-             }
-             return keys;
+            var server = _redis.GetServer(Localhost, Port);
+            List<string> keys = new List<string>();
+            foreach (var key in server.Keys(pattern: prefix + "*"))
+            {
+                keys.Add(key);
+            }
+            return keys;
         }
 
         public string GetDataFromDbByKey(string key)

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Valuator.Data.Repositories
+namespace ClassLibrary
 {
     public interface IRedisRepository
     {
