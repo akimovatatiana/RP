@@ -19,9 +19,9 @@ namespace ClassLibrary
         public RedisRepository()
         {
             _redis = ConnectionMultiplexer.Connect(Localhost);
-            _redisRus = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentRus}", EnvironmentVariableTarget.User));
-            _redisEu = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentEu}", EnvironmentVariableTarget.User));
-            _redisOther = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentOther}", EnvironmentVariableTarget.User));
+            _redisRus = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentRus}"));
+            _redisEu = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentEu}"));
+            _redisOther = ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable($"DB_{Constants.SegmentOther}"));
         }
 
         public IEnumerable<string> GetKeysFromDbByPrefix(string prefix, string shardKey, string segmentId)
