@@ -9,6 +9,7 @@ namespace Client
 {
     class Program
     {
+        private const string EndOfData = "<EOF>";
         public static void StartClient(Parameters parameters)
         {
             try
@@ -28,16 +29,29 @@ namespace Client
                     // CONNECT
                     sender.Connect(remoteEP);
 
-                    byte[] msg = Encoding.UTF8.GetBytes(parameters.Message);
+                    byte[] msg = Encoding.UTF8.GetBytes(parameters.Message + EndOfData);
 
                     // SEND
                     int bytesSent = sender.Send(msg);
 
                     // RECEIVE
                     byte[] buf = new byte[1024];
-                    int bytesRec = sender.Receive(buf);
 
-                    var history = JsonSerializer.Deserialize<List<string>>(Encoding.UTF8.GetString(buf, 0, bytesRec));
+                    var history = new List<string>();
+                    string data = null;
+
+                    while (true)
+                    {
+                        int bytesRec = sender.Receive(buf);
+                        data += Encoding.UTF8.GetString(buf, 0, bytesRec); 
+
+                        try
+                        {
+                            history = JsonSerializer.Deserialize<List<string>>(data);
+                            break;
+                        }
+                        catch { }
+                    }
 
                     foreach (var item in history)
                     {
